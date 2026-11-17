@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>World of Darkness Companion</title>
+<style>
+:root {
+    --bg: #111211;
+    --sidebar: #181a18;
+    --panel: #1d201d;
+    --panel-light: #252925;
+    --border: #383e38;
+    --text: #e5e5df;
+    --muted: #a1a69e;
+    --accent: #a6b49b;
+    --accent-dark: #687760;
+    --red: #9b4545;
+}
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Georgia, "Times New Roman", serif;
+    min-height: 100vh;
+}
+button { font: inherit; }
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+/* SIDEBAR */
+.sidebar {
+    width: 250px;
+    flex-shrink: 0;
+    background: var(--sidebar);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 25px 16px;
+}
+.brand {
+    padding: 8px 10px 30px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 25px;
+}
+.brand-mark {
+    color: var(--accent);
+    font-size: 30px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+}
+.brand-subtitle {
+    color: var(--muted);
+    font: 10px Arial, sans-serif;
+    letter-spacing: 3px;
+    margin-top: 5px;
+}
+.nav-label {
+    color: #777e75;
+    font: 10px Arial, sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0 12px;
+    margin: 18px 0 9px;
+}
+.nav-button {
+    width: 100%;
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid transparent;
+    padding: 12px;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-bottom: 4px;
+    transition: .2s;
+}
+.nav-button:hover {
+    background: var(--panel);
+    color: var(--text);
+}
+.nav-button.active {
+    background: var(--panel-light);
+    color: var(--text);
+    border-color: var(--border);
+    border-left: 3px solid var(--accent-dark);
+}
+.sidebar-footer {
+    margin-top: auto;
+    border-top: 1px solid var(--border);
+    padding: 18px 10px 0;
+    color: #777e75;
+    font: 10px Arial, sans-serif;
+    line-height: 1.7;
+}
+/* MAIN */
+.main {
+    flex: 1;
+    min-width: 0;
+}
+.topbar {
+    height: 64px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 35px;
+    background: rgba(24,26,24,.55);
+}
+.topbar-title {
+    color: var(--muted);
+    font: 10px Arial, sans-serif;
+    letter-spacing: 2px;
+}
+.topbar-status {
+    color: var(--muted);
+    font: 11px Arial, sans-serif;
+}
+.status-dot {
+    display: inline-block;
+    height: 7px;
+    width: 7px;
+    background: #8caa7b;
+    border-radius: 50%;
+    margin-right: 7px;
+}
+.content {
+    max-width: 1450px;
+    padding: 42px 4.5%;
+    margin: 0 auto;
+}
+.page { display: none; }
+.page.active { display: block; }
+.eyebrow {
+    color: var(--accent);
+    font: 10px Arial, sans-serif;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+h1 {
+    font-size: 43px;
+    font-weight: normal;
+    margin: 12px 0 10px;
+}
+h2 {
+    font-weight: normal;
+    font-size: 25px;
+}
+h3 {
+    font-weight: normal;
+    font-size: 19px;
+    margin: 0 0 10px;
+}
+.subtitle {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.7;
+    max-width: 750px;
+    margin: 0;
+}
+.section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    margin: 35px 0 16px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+}
+.section-heading h2 { margin: 0; font-size: 23px; }
+.section-heading span {
+    color: var(--muted);
+    font: 10px Arial, sans-serif;
+    letter-spacing: 1px;
+}
+/* CARDS */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 15px;
+}
+.card {
+    background: linear-gradient(145deg, var(--panel-light), var(--panel));
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 22px;
+    min-height: 170px;
+}
+.card-icon {
+    color: var(--accent);
+    font-size: 23px;
+    margin-bottom: 18px;
+}
+.card p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 0;
+}
+.card-link {
+    display: inline-block;
+    color: var(--accent);
+    font: 10px Arial, sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 18px;
+}
+/* HOME HERO */
+.hero {
+    min-height: 280px;
+    border: 1px solid var(--border);
+    background:
+      linear-gradient(90deg, rgba(17,18,17,.98), rgba(17,18,17,.72)),
+      radial-gradient(ellipse at 80% 45%, #465044 0%, #20251f 38%, #151715 75%);
+    padding: 42px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+.hero:after {
+    content: "M";
+    position: absolute;
+    right: 7%;
+    top: -45px;
+    color: rgba(190,205,180,.055);
+    font-size: 330px;
+    line-height: 1;
+    pointer-events: none;
+}
+.hero h1 { font-size: 48px; max-width: 650px; }
+.hero p {
+    color: #b4b9b0;
+    max-width: 600px;
+    line-height: 1.8;
+    font-size: 14px;
+}
+/* TABS */
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    border-bottom: 1px solid var(--border);
+    margin: 30px 0 22px;
+}
+.tab-button {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid transparent;
+    border-bottom: 0;
+    padding: 12px 17px;
+    cursor: pointer;
+    font-size: 13px;
+}
+.tab-button:hover { color: var(--text); }
+.tab-button.active {
+    color: var(--text);
+    background: var(--panel);
+    border-color: var(--border);
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.info-panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 25px;
+    border-radius: 4px;
+}
+.info-panel p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.8;
+}
+.rule-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+.rule-item {
+    padding: 15px;
+    background: var(--panel-light);
+    border: 1px solid var(--border);
+}
+.rule-item strong { display: block; margin-bottom: 6px; font-weight: normal; }
+.rule-item span { color: var(--muted); font-size: 12px; }
+/* LINE CARDS */
+.line-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    min-height: 205px;
+    padding: 22px;
+    position: relative;
+}
+.line-card:before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--line-color, var(--accent-dark));
+}
+.line-card .edition {
+    color: var(--muted);
+    font: 9px Arial, sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+.line-card h3 { margin-top: 18px; }
+.line-card p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
+/* PLACEHOLDERS */
+.placeholder {
+    margin-top: 25px;
+    padding: 55px 25px;
+    text-align: center;
+    border: 1px dashed var(--border);
+    background: rgba(29,32,29,.45);
+}
+.placeholder .symbol { color: var(--accent); font-size: 30px; }
+.placeholder p {
+    color: var(--muted);
+    max-width: 520px;
+    margin: 10px auto 0;
+    line-height: 1.7;
+    font-size: 13px;
+}
+@media (max-width: 1000px) {
+    .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 700px) {
+    .app { display: block; }
+    .sidebar { width: 100%; padding: 12px; }
+    .brand { padding: 5px 8px 14px; margin-bottom: 12px; }
+    .brand-mark { font-size: 23px; }
+    .nav-label, .sidebar-footer { display: none; }
+    .sidebar nav { display: flex; overflow-x: auto; gap: 4px; }
+    .nav-button { width: auto; white-space: nowrap; padding: 10px; font-size: 12px; }
+    .topbar { padding: 0 16px; height: 48px; }
+    .content { padding: 27px 16px; }
+    h1 { font-size: 34px; }
+    .hero { padding: 25px; min-height: 250px; }
+    .hero h1 { font-size: 36px; }
+    .card-grid, .rule-list { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-mark">World of Darkness</div>
+            <div class="brand-subtitle">COMPANION · 20TH ANNIVERSARY</div>
+        </div>
+
+        <div class="nav-label">Principal</div>
+        <nav>
+            <button class="nav-button active" data-page="home">⌂ &nbsp; Inicio</button>
+            <button class="nav-button" data-page="system">▤ &nbsp; Sistema</button>
+            <button class="nav-button" data-page="lines">✦ &nbsp; Líneas de juego</button>
+            <button class="nav-button" data-page="creator">♙ &nbsp; Creador de personajes</button>
+            <button class="nav-button" data-page="npcs">♟ &nbsp; Generador de NPCs</button>
+        </nav>
+
+        <div class="nav-label">Otros</div>
+        <nav>
+            <button class="nav-button" data-page="library">▧ &nbsp; Biblioteca</button>
+            <button class="nav-button" data-page="settings">⚙ &nbsp; Configuración</button>
+        </nav>
+
+        <div class="sidebar-footer">
+            WORLD OF DARKNESS COMPANION<br>
+            Versión 0.1 · Prototipo
+        </div>
+    </aside>
+
+    <main class="main">
+        <header class="topbar">
+            <div class="topbar-title">A WORLD OF DARKNESS TOOLKIT</div>
+            <div class="topbar-status"><span class="status-dot"></span> Sistema local</div>
+        </header>
+
+        <div class="content">
+
+            <!-- INICIO -->
+            <section class="page active" id="page-home">
+                <div class="hero">
+                    <div class="eyebrow">Bienvenido al Mundo de Tinieblas</div>
+                    <h1>La noche es más antigua de lo que creés.</h1>
+                    <p>
+                        Un mundo oculto existe detrás de la realidad cotidiana.
+                        Antiguas sociedades, criaturas sobrenaturales y secretos
+                        olvidados esperan en las sombras. Esta herramienta reúne
+                        reglas, referencias y recursos para tus crónicas.
+                    </p>
+                </div>
+
+                <div class="section-heading">
+                    <h2>Explorar</h2>
+                    <span>ACCESO RÁPIDO</span>
+                </div>
+                <div class="card-grid">
+                    <article class="card">
+                        <div class="card-icon">▤</div>
+                        <h3>Sistema</h3>
+                        <p>Consultá las reglas generales, las tiradas, el combate y las mecánicas compartidas.</p>
+                        <span class="card-link">Consultar sistema →</span>
+                    </article>
+                    <article class="card">
+                        <div class="card-icon">✦</div>
+                        <h3>Líneas de juego</h3>
+                        <p>Explorá los distintos universos y sus reglas particulares.</p>
+                        <span class="card-link">Explorar líneas →</span>
+                    </article>
+                    <article class="card">
+                        <div class="card-icon">♙</div>
+                        <h3>Personajes</h3>
+                        <p>Creá, organizá y consultá tus personajes de Mundo de Tinieblas.</p>
+                        <span class="card-link">Crear personaje →</span>
+                    </article>
+                </div>
+
+                <div class="section-heading">
+                    <h2>Desde las sombras</h2>
+                    <span>LORE / TEXTO DE EJEMPLO</span>
+                </div>
+                <div class="info-panel">
+                    <h3>La Mascarada</h3>
+                    <p>
+                        La humanidad camina bajo un cielo que cree conocer. En las calles,
+                        los trenes siguen llegando y las luces de las oficinas permanecen
+                        encendidas hasta la madrugada. Sin embargo, detrás de las puertas
+                        cerradas se negocian favores que duran siglos. Los nombres cambian,
+                        los imperios caen y las criaturas de la noche continúan jugando
+                        sus partidas.
+                    </p>
+                </div>
+            </section>
+
+            <!-- SISTEMA -->
+            <section class="page" id="page-system">
+                <div class="eyebrow">Reglas y referencias</div>
+                <h1>Sistema</h1>
+                <p class="subtitle">Un conjunto de herramientas y referencias para las mecánicas compartidas de Mundo de Tinieblas.</p>
+
+                <div class="tabs" data-tab-group="system">
+                    <button class="tab-button active" data-tab="dice">Sistema de dados</button>
+                    <button class="tab-button" data-tab="attributes">Atributos</button>
+                    <button class="tab-button" data-tab="abilities">Habilidades</button>
+                    <button class="tab-button" data-tab="combat">Combate</button>
+                    <button class="tab-button" data-tab="health">Salud</button>
+                    <button class="tab-button" data-tab="experience">Experiencia</button>
+                </div>
+
+                <div class="tab-panel active" data-panel="dice">
+                    <div class="info-panel">
+                        <div class="eyebrow">Mecánica general</div>
+                        <h2>El sistema de dados</h2>
+                        <p>Las acciones se resuelven reuniendo una reserva de dados de diez caras. El resultado de cada dado se compara con una dificultad para determinar los éxitos obtenidos.</p>
+                        <div class="rule-list">
+                            <div class="rule-item"><strong>Reserva de dados</strong><span>Atributo + Habilidad, cuando corresponda.</span></div>
+                            <div class="rule-item"><strong>Dificultad</strong><span>Valor objetivo que debe igualar o superar cada dado.</span></div>
+                            <div class="rule-item"><strong>Éxitos</strong><span>Los resultados que alcanzan la dificultad.</span></div>
+                            <div class="rule-item"><strong>Fracasos</strong><span>La interpretación depende de las reglas de cada línea.</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-panel" data-panel="attributes">
+                    <div class="info-panel">
+                        <h2>Atributos</h2>
+                        <p>Los atributos representan las capacidades innatas del personaje y se organizan en tres categorías.</p>
+                        <div class="rule-list">
+                            <div class="rule-item"><strong>Físicos</strong><span>Fuerza, Destreza y Resistencia.</span></div>
+                            <div class="rule-item"><strong>Sociales</strong><span>Carisma, Manipulación y Apariencia.</span></div>
+                            <div class="rule-item"><strong>Mentales</strong><span>Percepción, Inteligencia y Astucia.</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-panel" data-panel="abilities">
+                    <div class="info-panel">
+                        <h2>Habilidades</h2>
+                        <p>Las habilidades describen lo que el personaje aprendió, practicó o desarrolló a lo largo de su vida.</p>
+                        <div class="rule-list">
+                            <div class="rule-item"><strong>Talentos</strong><span>Capacidades intuitivas y aprendidas mediante la experiencia.</span></div>
+                            <div class="rule-item"><strong>Técnicas</strong><span>Entrenamiento, práctica y destreza especializada.</span></div>
+                            <div class="rule-item"><strong>Conocimientos</strong><span>Educación, investigación y formación intelectual.</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-panel" data-panel="combat">
+                    <div class="info-panel">
+                        <h2>Combate</h2>
+                        <p>El enfrentamiento se divide en turnos y acciones. Las reglas específicas pueden variar según la línea de juego.</p>
+                    </div>
+                </div>
+                <div class="tab-panel" data-panel="health">
+                    <div class="info-panel">
+                        <h2>Salud y daño</h2>
+                        <p>Los personajes pueden sufrir diferentes tipos de daño y penalizadores. Cada línea puede incorporar reglas particulares de curación y resistencia.</p>
+                    </div>
+                </div>
+                <div class="tab-panel" data-panel="experience">
+                    <div class="info-panel">
+                        <h2>Experiencia</h2>
+                        <p>La experiencia representa el crecimiento del personaje. Los costes de mejora se definirán en cada módulo de juego.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- LINEAS -->
+            <section class="page" id="page-lines">
+                <div class="eyebrow">Universos y ambientaciones</div>
+                <h1>Líneas de juego</h1>
+                <p class="subtitle">Cada línea presenta sus propias criaturas, sociedades, poderes y reglas. Seleccioná una para consultar su contenido.</p>
+                <div class="section-heading"><h2>Universos disponibles</h2><span>CONTENIDO DE EJEMPLO</span></div>
+                <div class="card-grid">
+                    <article class="line-card" style="--line-color:#9b4545"><span class="edition">V20 · 20th Anniversary</span><h3>Vampiro: La Mascarada</h3><p>La Jyhad continúa. Los antiguos manipulan a sus descendientes mientras la Bestia reclama su lugar.</p></article>
+                    <article class="line-card" style="--line-color:#8a9a61"><span class="edition">W20 · 20th Anniversary</span><h3>Hombre Lobo: El Apocalipsis</h3><p>Los Garou luchan una guerra desesperada por salvar un mundo que parece condenado.</p></article>
+                    <article class="line-card" style="--line-color:#6687b4"><span class="edition">M20 · 20th Anniversary</span><h3>Mago: La Ascensión</h3><p>La realidad es un campo de batalla donde la voluntad y la creencia pueden cambiarlo todo.</p></article>
+                    <article class="line-card" style="--line-color:#a58c58"><span class="edition">20th Anniversary</span><h3>Wraith: El Olvido</h3><p>Los muertos permanecen atrapados entre sus pasiones, sus recuerdos y la amenaza del Olvido.</p></article>
+                    <article class="line-card" style="--line-color:#8b739d"><span class="edition">20th Anniversary</span><h3>Changeling: El Ensueño</h3><p>La magia y la imaginación sobreviven en un mundo que lentamente olvida cómo soñar.</p></article>
+                    <article class="line-card" style="--line-color:#a66a4d"><span class="edition">Hunter</span><h3>Cazador: La Venganza</h3><p>Personas comunes descubren la oscuridad y deciden enfrentarse a aquello que acecha.</p></article>
+                    <article class="line-card" style="--line-color:#b39b65"><span class="edition">Mummy</span><h3>Momia</h3><p>Seres antiguos regresan al mundo de los vivos con memorias y poderes de otra era.</p></article>
+                    <article class="line-card" style="--line-color:#777d91"><span class="edition">Demon</span><h3>Demon: La Caída</h3><p>Los antiguos caídos caminan otra vez entre los mortales, buscando propósito y redención.</p></article>
+                    <article class="line-card" style="--line-color:#8b7770"><span class="edition">Suplementos y líneas relacionadas</span><h3>Ghoul, Kinfolk y Revenant</h3><p>Otros seres y personajes vinculados a las grandes líneas del Mundo de Tinieblas.</p></article>
+                </div>
+            </section>
+
+            <!-- CREADOR -->
+            <section class="page" id="page-creator">
+                <div class="eyebrow">Herramienta de creación</div>
+                <h1>Creador de personajes</h1>
+                <p class="subtitle">Construí personajes para las distintas líneas de juego mediante un proceso guiado y adaptado a sus reglas.</p>
+                <div class="placeholder">
+                    <div class="symbol">♙</div>
+                    <h2>Tu próxima historia comienza acá</h2>
+                    <p>En esta sección estará el creador de personajes. Cada línea tendrá sus propios pasos, opciones, validaciones y hoja final.</p>
+                </div>
+            </section>
+
+            <!-- NPC -->
+            <section class="page" id="page-npcs">
+                <div class="eyebrow">Herramienta para narradores</div>
+                <h1>Generador de NPCs</h1>
+                <p class="subtitle">Creá habitantes del Mundo de Tinieblas: aliados, rivales, contactos, antagonistas y criaturas sobrenaturales.</p>
+                <div class="placeholder">
+                    <div class="symbol">♟</div>
+                    <h2>Personajes para poblar la noche</h2>
+                    <p>El generador permitirá seleccionar una línea, un arquetipo y un nivel de detalle, o crear un personaje completamente aleatorio.</p>
+                </div>
+            </section>
+
+            <!-- BIBLIOTECA -->
+            <section class="page" id="page-library">
+                <div class="eyebrow">Archivo y referencias</div>
+                <h1>Biblioteca</h1>
+                <p class="subtitle">Un espacio para consultar contenido, reglas, material adicional y recursos personalizados.</p>
+                <div class="placeholder">
+                    <div class="symbol">▧</div>
+                    <h2>Archivo de conocimiento</h2>
+                    <p>Acá se organizarán los catálogos de contenido oficial, suplementos y material Homebrew.</p>
+                </div>
+            </section>
+
+            <!-- CONFIGURACION -->
+            <section class="page" id="page-settings">
+                <div class="eyebrow">Preferencias</div>
+                <h1>Configuración</h1>
+                <p class="subtitle">Administración de la aplicación y sus opciones generales.</p>
+                <div class="placeholder">
+                    <div class="symbol">⚙</div>
+                    <h2>Configuración general</h2>
+                    <p>En esta sección se gestionarán las preferencias visuales, el contenido personalizado y las copias de seguridad.</p>
+                </div>
+            </section>
+
+        </div>
+    </main>
+</div>
+
+<script>
+// Navegación principal
+const navigationButtons = document.querySelectorAll(".nav-button");
+const pages = document.querySelectorAll(".page");
+
+navigationButtons.forEach(function(button) {
+    button.addEventListener("click", function() {
+        const targetPage = button.dataset.page;
+
+        navigationButtons.forEach(function(item) {
+            item.classList.remove("active");
+        });
+
+        pages.forEach(function(page) {
+            page.classList.remove("active");
+        });
+
+        button.classList.add("active");
+
+        const pageToShow = document.getElementById("page-" + targetPage);
+        if (pageToShow) {
+            pageToShow.classList.add("active");
+        }
+    });
+});
+
+// Pestañas de la sección Sistema
+const tabGroups = document.querySelectorAll("[data-tab-group]");
+
+tabGroups.forEach(function(group) {
+    const tabButtons = group.querySelectorAll(".tab-button");
+    const pageSection = group.closest(".page");
+    const panels = pageSection.querySelectorAll(".tab-panel");
+
+    tabButtons.forEach(function(button) {
+        button.addEventListener("click", function() {
+            const selectedTab = button.dataset.tab;
+
+            tabButtons.forEach(function(item) {
+                item.classList.remove("active");
+            });
+
+            panels.forEach(function(panel) {
+                panel.classList.remove("active");
+            });
+
+            button.classList.add("active");
+
+            const selectedPanel = pageSection.querySelector(
+                '[data-panel="' + selectedTab + '"]'
+            );
+
+            if (selectedPanel) {
+                selectedPanel.classList.add("active");
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>
