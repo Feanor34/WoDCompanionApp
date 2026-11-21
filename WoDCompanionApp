@@ -420,7 +420,7 @@
 
             <div class="content">
 
-                <!-- INICIO -->
+                <!-- SIDE PANEL: INICIO -->
                 <section class="page active" id="page-home">
                     <div class="eyebrow">World of Darkness</div>
                     <h1>Líneas de juego</h1>
@@ -448,11 +448,11 @@
                     </div>
                 </section>
 
-                <!-- SISTEMA -->
+                <!-- SIDE PANEL: SISTEMA -->
                 <section class="page" id="page-system">
                     <div class="eyebrow">Reglas y referencias</div>
                     <h1>Sistema</h1>
-                    <p class="subtitle">Un conjunto de herramientas y referencias para las mecánicas compartidas de Mundo de Tinieblas.</p>
+                    <p class="subtitle">Reglas generales y mecánicas de las distintas líneas de Mundo de Tinieblas.</p>
 
                     <div class="tabs" data-tab-group="system">
                         <button class="tab-button active" data-tab="dice">Sistema de dados</button>
@@ -463,62 +463,38 @@
                         <button class="tab-button" data-tab="experience">Experiencia</button>
                     </div>
 
-                    <div class="tab-panel active" data-panel="dice">
-                        <div class="info-panel">
-                            <div class="eyebrow">Mecánica general</div>
-                            <h2>El sistema de dados</h2>
-                            <p>Las acciones se resuelven reuniendo una reserva de dados de diez caras. El resultado de cada dado se compara con una dificultad para determinar los éxitos obtenidos.</p>
-                            <div class="rule-list">
-                                <div class="rule-item"><strong>Reserva de dados</strong><span>Atributo + Habilidad, cuando corresponda.</span></div>
-                                <div class="rule-item"><strong>Dificultad</strong><span>Valor objetivo que debe igualar o superar cada dado.</span></div>
-                                <div class="rule-item"><strong>Éxitos</strong><span>Los resultados que alcanzan la dificultad.</span></div>
-                                <div class="rule-item"><strong>Fracasos</strong><span>La interpretación depende de las reglas de cada línea.</span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-panel" data-panel="attributes">
-                        <div class="info-panel">
-                            <h2>Atributos</h2>
-                            <p>Los atributos representan las capacidades innatas del personaje y se organizan en tres categorías.</p>
-                            <div class="rule-list">
-                                <div class="rule-item"><strong>Físicos</strong><span>Fuerza, Destreza y Resistencia.</span></div>
-                                <div class="rule-item"><strong>Sociales</strong><span>Carisma, Manipulación y Apariencia.</span></div>
-                                <div class="rule-item"><strong>Mentales</strong><span>Percepción, Inteligencia y Astucia.</span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-panel" data-panel="abilities">
-                        <div class="info-panel">
-                            <h2>Habilidades</h2>
-                            <p>Las habilidades describen lo que el personaje aprendió, practicó o desarrolló a lo largo de su vida.</p>
-                            <div class="rule-list">
-                                <div class="rule-item"><strong>Talentos</strong><span>Capacidades intuitivas y aprendidas mediante la experiencia.</span></div>
-                                <div class="rule-item"><strong>Técnicas</strong><span>Entrenamiento, práctica y destreza especializada.</span></div>
-                                <div class="rule-item"><strong>Conocimientos</strong><span>Educación, investigación y formación intelectual.</span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-panel" data-panel="combat">
-                        <div class="info-panel">
-                            <h2>Combate</h2>
-                            <p>El enfrentamiento se divide en turnos y acciones. Las reglas específicas pueden variar según la línea de juego.</p>
-                        </div>
-                    </div>
-                    <div class="tab-panel" data-panel="health">
-                        <div class="info-panel">
-                            <h2>Salud y daño</h2>
-                            <p>Los personajes pueden sufrir diferentes tipos de daño y penalizadores. Cada línea puede incorporar reglas particulares de curación y resistencia.</p>
-                        </div>
-                    </div>
+                    <div class="tab-panel active" data-panel="dice" id="systemDice"></div>
+                    <div class="tab-panel" data-panel="attributes" id="systemAttributes"></div>
+                    <div class="tab-panel" data-panel="abilities" id="systemAbilities"></div>
+                    <div class="tab-panel" data-panel="combat" id="systemCombat"></div>
+                    <div class="tab-panel" data-panel="health" id="systemHealth"></div>
+
                     <div class="tab-panel" data-panel="experience">
                         <div class="info-panel">
                             <h2>Experiencia</h2>
-                            <p>La experiencia representa el crecimiento del personaje. Los costes de mejora se definirán en cada módulo de juego.</p>
+                            <p>La experiencia representa el crecimiento y aprendizaje del personaje. Seleccioná una línea de juego para consultar sus costes de mejora.</p>
+
+                            <div class="tabs" id="experienceLineSelector">
+                                <button class="tab-button active" data-experience-line="vampire">Vampiro</button>
+                                <button class="tab-button" data-experience-line="werewolf">Hombre Lobo</button>
+                                <button class="tab-button" data-experience-line="mage">Mago</button>
+                                <button class="tab-button" data-experience-line="wraith">Wraith</button>
+                                <button class="tab-button" data-experience-line="changeling">Changeling</button>
+                                <button class="tab-button" data-experience-line="hunter">Cazador</button>
+                                <button class="tab-button" data-experience-line="mummy">Momia</button>
+                                <button class="tab-button" data-experience-line="demon">Demonio</button>
+                                <button class="tab-button" data-experience-line="ghoul">Ghoul</button>
+                                <button class="tab-button" data-experience-line="kinfolk">Kinfolk</button>
+                                <button class="tab-button" data-experience-line="revenant">Revenant</button>
+                                <button class="tab-button" data-experience-line="mortal">Mortales</button>
+                            </div>
+
+                            <div id="experienceLineContent"></div>
                         </div>
                     </div>
                 </section>
 
-                <!-- LINEAS -->
+                <!-- SIDE PANEL: LINEAS -->
                 <section class="page" id="page-lines">
                     <div class="eyebrow">Universos y ambientaciones</div>
                     <h1>Líneas de juego</h1>
@@ -617,7 +593,7 @@
                     </div>
                 </section>
 
-                <!-- CREADOR -->
+                <!-- SIDE PANEL: CREADOR DE PERSONAJES -->
                 <section class="page" id="page-creator">
                     <div class="eyebrow">Herramienta de creación</div>
                     <h1>Creador de personajes</h1>
@@ -629,7 +605,7 @@
                     </div>
                 </section>
 
-                <!-- NPC -->
+                <!-- SIDE PANEL: NPC -->
                 <section class="page" id="page-npcs">
                     <div class="eyebrow">Herramienta para narradores</div>
                     <h1>Generador de NPCs</h1>
@@ -641,7 +617,7 @@
                     </div>
                 </section>
 
-                <!-- BIBLIOTECA -->
+                <!-- SIDE PANEL: BIBLIOTECA -->
                 <section class="page" id="page-library">
                     <div class="eyebrow">Archivo y referencias</div>
                     <h1>Biblioteca</h1>
@@ -653,7 +629,7 @@
                     </div>
                 </section>
 
-                <!-- CONFIGURACION -->
+                <!-- SIDE PANEL: CONFIGURACION -->
                 <section class="page" id="page-settings">
                     <div class="eyebrow">Preferencias</div>
                     <h1>Configuración</h1>
@@ -2516,7 +2492,7 @@
                 }
             },
             {
-                id: "experienceVampire", name: "Vampiro: La Mascarada 20.º Aniversario", source: ["vampire"],
+                id: "experienceVampire", source: ["vampire"], name: "Vampiro: La Mascarada 20.º Aniversario",
                 system: {
                     attributes: "Puntuación actual × 4.",
                     abilities: "Puntuación actual × 2.",
@@ -2539,7 +2515,7 @@
                 }
             },
             {
-                id: "experienceGarou", name: "Hombre Lobo: El Apocalipsis 20.º Aniversario", source: ["werewolf"],
+                id: "experienceGarou", source: ["werewolf"], name: "Hombre Lobo: El Apocalipsis 20.º Aniversario",
                 system: {
                     attributes: "Puntuación actual × 4.",
                     abilities: "Puntuación actual × 2.",
@@ -2557,7 +2533,7 @@
                 }
             },
             {
-                id: "experienceMage", name: "Mago: La Ascensión 20.º Aniversario", source: ["mage"],
+                id: "experienceMage", source: ["mage"], name: "Mago: La Ascensión 20.º Aniversario",
                 system: {
                     attributes: "Puntuación actual × 4.",
                     abilities: "Puntuación actual × 2.",
@@ -2577,7 +2553,7 @@
                 }
             },
             {
-                id: "experienceWraith", name: "Wraith: El Olvido 20.º Aniversario", source: ["wraith"],
+                id: "experienceWraith", source: ["wraith"], name: "Wraith: El Olvido 20.º Aniversario",
                 system: {
                     attributes: "Puntuación actual × 4.",
                     abilities: "Puntuación actual × 2.",
@@ -2598,6 +2574,198 @@
                         darkPassions: "Puntuación actual × 2."
                     },
                     notes: "Los aumentos de Pasiones, Grilletes y Trasfondos requieren justificación narrativa y aprobación del Narrador. Los Arcanoi pueden aprenderse con instrucción de un Gremio o maestro; las condiciones de aprendizaje pueden modificar su coste."
+                }
+            },
+            {
+                id: "experienceChangeling", source: ["changeling"], name: "Changeling: El Ensueño",
+                system: {
+                    attributes: null,
+                    abilities:  null,
+                    newAbility:  null,
+                    arcanoi:  null,
+                    newArcanos:  null,
+                    willpower:  null,
+                    passions:  null,
+                    fetters:  null,
+                    backgrounds:  null,
+                    corpus:  null,
+                    pathos:  null,
+                    shadowExperience: {
+                        accumulation:  null,
+                        thorns:  null,
+                        angst:  null,
+                        newDarkPassion:  null,
+                        darkPassions:  null
+                    },
+                    notes:  null
+                }
+            },
+            {
+                id: "experienceHunter", source: ["hunter"], name: "Cazador",
+                system: {
+                    attributes: null,
+                    abilities:  null,
+                    newAbility:  null,
+                    arcanoi:  null,
+                    newArcanos:  null,
+                    willpower:  null,
+                    passions:  null,
+                    fetters:  null,
+                    backgrounds:  null,
+                    corpus:  null,
+                    pathos:  null,
+                    shadowExperience: {
+                        accumulation:  null,
+                        thorns:  null,
+                        angst:  null,
+                        newDarkPassion:  null,
+                        darkPassions:  null
+                    },
+                    notes:  null
+                }
+            },
+            {
+                id: "experienceMummy", source: ["mummy"], name: "Momia",
+                system: {
+                    attributes: null,
+                    abilities:  null,
+                    newAbility:  null,
+                    arcanoi:  null,
+                    newArcanos:  null,
+                    willpower:  null,
+                    passions:  null,
+                    fetters:  null,
+                    backgrounds:  null,
+                    corpus:  null,
+                    pathos:  null,
+                    shadowExperience: {
+                        accumulation:  null,
+                        thorns:  null,
+                        angst:  null,
+                        newDarkPassion:  null,
+                        darkPassions:  null
+                    },
+                    notes:  null
+                }
+            },
+            {
+                id: "experienceDemon", source: ["demon"], name: "Demonio: La Caída",
+                system: {
+                    attributes: null,
+                    abilities:  null,
+                    newAbility:  null,
+                    arcanoi:  null,
+                    newArcanos:  null,
+                    willpower:  null,
+                    passions:  null,
+                    fetters:  null,
+                    backgrounds:  null,
+                    corpus:  null,
+                    pathos:  null,
+                    shadowExperience: {
+                        accumulation:  null,
+                        thorns:  null,
+                        angst:  null,
+                        newDarkPassion:  null,
+                        darkPassions:  null
+                    },
+                    notes:  null
+                }
+            },
+            {
+                id: "experienceGhoul", source: ["ghoul"], name: "Ghoul: La Adiccion",
+                system: {
+                    attributes: null,
+                    abilities:  null,
+                    newAbility:  null,
+                    arcanoi:  null,
+                    newArcanos:  null,
+                    willpower:  null,
+                    passions:  null,
+                    fetters:  null,
+                    backgrounds:  null,
+                    corpus:  null,
+                    pathos:  null,
+                    shadowExperience: {
+                        accumulation:  null,
+                        thorns:  null,
+                        angst:  null,
+                        newDarkPassion:  null,
+                        darkPassions:  null
+                    },
+                    notes:  null
+                }
+            },
+            {
+                id: "experienceKinfolk", source: ["kinfolk"], name: "Kinfolk",
+                system: {
+                    attributes: null,
+                    abilities:  null,
+                    newAbility:  null,
+                    arcanoi:  null,
+                    newArcanos:  null,
+                    willpower:  null,
+                    passions:  null,
+                    fetters:  null,
+                    backgrounds:  null,
+                    corpus:  null,
+                    pathos:  null,
+                    shadowExperience: {
+                        accumulation:  null,
+                        thorns:  null,
+                        angst:  null,
+                        newDarkPassion:  null,
+                        darkPassions:  null
+                    },
+                    notes:  null
+                }
+            },
+            {
+                id: "experienceRevenant", source: ["Revenant"], name: "Revenant",
+                system: {
+                    attributes: null,
+                    abilities:  null,
+                    newAbility:  null,
+                    arcanoi:  null,
+                    newArcanos:  null,
+                    willpower:  null,
+                    passions:  null,
+                    fetters:  null,
+                    backgrounds:  null,
+                    corpus:  null,
+                    pathos:  null,
+                    shadowExperience: {
+                        accumulation:  null,
+                        thorns:  null,
+                        angst:  null,
+                        newDarkPassion:  null,
+                        darkPassions:  null
+                    },
+                    notes:  null
+                }
+            },
+            {
+                id: "experienceMortals", source: ["mortals"], name: "Mortales",
+                system: {
+                    attributes: null,
+                    abilities:  null,
+                    newAbility:  null,
+                    arcanoi:  null,
+                    newArcanos:  null,
+                    willpower:  null,
+                    passions:  null,
+                    fetters:  null,
+                    backgrounds:  null,
+                    corpus:  null,
+                    pathos:  null,
+                    shadowExperience: {
+                        accumulation:  null,
+                        thorns:  null,
+                        angst:  null,
+                        newDarkPassion:  null,
+                        darkPassions:  null
+                    },
+                    notes:  null
                 }
             }
         ];
@@ -6453,7 +6621,7 @@
         // --- RESERVAS DE DADOS ---
         // --- REGLAS ESPECIALES ---
 
-        // Navegación principal
+        // --- NAVEGACION PRINCIPAL ---
         const navigationButtons = document.querySelectorAll(".nav-button");
         const pages = document.querySelectorAll(".page");
 
@@ -6478,7 +6646,7 @@
             });
         });
 
-        // Pestañas de la sección Sistema
+        // --- PESTAÑSA DE SELECCION DE SISTEMA ---
         const tabGroups = document.querySelectorAll("[data-tab-group]");
 
         tabGroups.forEach(function(group) {
@@ -6511,7 +6679,7 @@
             });
         });
 
-        // Home line selector
+        // --- PESTAÑA DE INICIO, SELECTOR DE LINEAS DE JUEGOS ---
         const homeLineButtons = document.querySelectorAll("#homeLineSelector .tab-button");
 
         const homeLineData = {
@@ -6545,7 +6713,108 @@
             });
         });
 
-        // --- LINEAS DE JUEGO CONTENIDO ---
+        // --- SISTEMA ---
+        function renderSystemPanel(containerId, data) {
+            const container = document.getElementById(containerId);
+
+            container.innerHTML = `
+                <div class="info-panel">
+                    <div class="eyebrow">Reglas generales</div>
+                    <h2>${data.title}</h2>
+                    <p>${data.description}</p>
+                    <div class="rule-list">
+                        ${data.rules.map(rule => `
+                            <div class="rule-item">
+                                <strong>${rule[0]}</strong>
+                                <span>${rule[1]}</span>
+                            </div>
+                        `).join("")}
+                    </div>
+                    ${data.successes ? `
+                        <div class="section-heading">
+                            <h2>Tabla de éxitos</h2>
+                        </div>
+                        <div class="rule-list">
+                            ${data.successes.map(rule => `
+                                <div class="rule-item">
+                                    <strong>${rule[0]}</strong>
+                                    <span>${rule[1]}</span>
+                                </div>
+                            `).join("")}
+                        </div>
+                    ` : ""}
+                </div>
+            `;
+        }
+
+        function renderExperienceLine(lineId) {
+            const data = experienceReferenceData[lineId];
+            const container = document.getElementById("experienceLineContent");
+
+            if (!data) return;
+
+            let content = `
+                <div class="section-heading">
+                    <h2>${data.title}</h2>
+                    <span>COSTES DE EXPERIENCIA</span>
+                </div>
+            `;
+
+            if (!data.rules) {
+                content += `
+                    <div class="placeholder">
+                        <div class="symbol">✦</div>
+                        <h3>Información pendiente</h3>
+                        <p>Los costes de experiencia de esta línea todavía no están incorporados.</p>
+                    </div>
+                `;
+            } else {
+                content += `
+                    <div class="rule-list">
+                        ${data.rules.map(rule => `
+                            <div class="rule-item">
+                                <strong>${rule[0]}</strong>
+                                <span>${rule[1]}</span>
+                            </div>
+                        `).join("")}
+                    </div>
+                `;
+            }
+
+            if (data.notes) {
+                content += `<p>${data.notes}</p>`;
+            }
+
+            container.innerHTML = content;
+        }
+
+
+        // --- SISTEMA: INICIALIZACIÓN ---
+
+        renderSystemPanel("systemDice", systemReferenceData.dice);
+        renderSystemPanel("systemAttributes", systemReferenceData.attributes);
+        renderSystemPanel("systemAbilities", systemReferenceData.abilities);
+        renderSystemPanel("systemCombat", systemReferenceData.combat);
+        renderSystemPanel("systemHealth", systemReferenceData.health);
+
+        const experienceLineButtons = document.querySelectorAll(
+            "#experienceLineSelector [data-experience-line]"
+        );
+
+        experienceLineButtons.forEach(function(button) {
+            button.addEventListener("click", function() {
+                experienceLineButtons.forEach(function(item) {
+                    item.classList.remove("active");
+                });
+
+                button.classList.add("active");
+                renderExperienceLine(button.dataset.experienceLine);
+            });
+        });
+
+        renderExperienceLine("vampire");
+
+        // --- LINEAS DE JUEGO, CONTENIDO ---
         const lineData = {
             vampire: {
                 title: "Vampiro: La Mascarada",
