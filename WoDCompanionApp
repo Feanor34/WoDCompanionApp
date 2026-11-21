@@ -2501,6 +2501,106 @@
         ];
 
         // --- EXPERIENCIA ---
+        const experience = [
+            {
+                id: "experience000", name: "Experiencia",
+                description: "La experiencia representa el aprendizaje, crecimiento y desarrollo de un personaje a lo largo de sus historias. Se acumula mediante puntos otorgados por el Narrador al finalizar sesiones o historias, y se utiliza para mejorar atributos, habilidades, poderes y otros rasgos. Los puntos no gastados se conservan para futuras mejoras. Cada adquisición debe justificarse mediante las experiencias, el entrenamiento o los acontecimientos vividos por el personaje.",
+                system: {
+                    accumulation: "El Narrador otorga puntos de experiencia al finalizar sesiones o historias, considerando la participación, interpretación, aprendizaje, objetivos alcanzados y acontecimientos importantes.",
+                    storage: "La experiencia no gastada se conserva y se suma a los puntos obtenidos posteriormente.",
+                    spending: "El jugador puede gastar experiencia para adquirir nuevos rasgos o aumentar los existentes, pagando el coste correspondiente a su línea de juego.",
+                    improvement: "Cuando un rasgo aumenta de puntuación, el coste se calcula utilizando el valor indicado por la regla de ese rasgo. Si se aumentan varios niveles, se paga cada incremento por separado.",
+                    requirements: "Algunas mejoras requieren entrenamiento, maestros, aprobación del Narrador, justificación narrativa o acontecimientos específicos.",
+                    restrictions: "No todos los rasgos pueden comprarse mediante experiencia. Algunos solamente pueden adquirirse durante la creación del personaje o mediante acontecimientos narrativos.",
+                    record: "Toda experiencia obtenida y gastada debe registrarse para mantener actualizado el saldo disponible."
+                }
+            },
+            {
+                id: "experienceVampire", name: "Vampiro: La Mascarada 20.º Aniversario", source: ["vampire"],
+                system: {
+                    attributes: "Puntuación actual × 4.",
+                    abilities: "Puntuación actual × 2.",
+                    newAbility: "3 puntos.",
+                    clanDiscipline: "Puntuación actual × 5.",
+                    outOfClanDiscipline: "Puntuación actual × 7.",
+                    caitiffDiscipline: "Puntuación actual × 6.",
+                    newDiscipline: "10 puntos.",
+                    newThaumaturgyOrNecromancyPath: "7 puntos.",
+                    secondaryThaumaturgyOrNecromancyPath: "Puntuación actual × 4.",
+                    virtues: "Puntuación actual × 2.",
+                    humanity: "Puntuación actual × 2.",
+                    path: "Puntuación actual × 2.",
+                    willpower: "Puntuación actual × 1.",
+                    backgrounds: "informacion insuficiente.",
+                    merits: "informacion insuficiente.",
+                    flaws: "No tienen un coste general de adquisición mediante experiencia.",
+                    rituals: "informacion insuficiente.",
+                    notes: "Aumentar una Virtud no aumenta automáticamente los rasgos derivados de ella, como Humanidad, Senda o Fuerza de Voluntad. Los costes de Disciplinas dependen de si son de clan o ajenas al clan."
+                }
+            },
+            {
+                id: "experienceGarou", name: "Hombre Lobo: El Apocalipsis 20.º Aniversario", source: ["werewolf"],
+                system: {
+                    attributes: "Puntuación actual × 4.",
+                    abilities: "Puntuación actual × 2.",
+                    newAbility: "3 puntos.",
+                    gifts: "Rango del Don × 3.",
+                    giftsOutsideBreedAuspiceOrTribe: "Rango del Don × 5.",
+                    rage: "Puntuación actual × 1.",
+                    gnosis: "Puntuación actual × 2.",
+                    willpower: "Puntuación actual × 1.",
+                    backgrounds: "No se aumentan normalmente mediante experiencia. El Trasfondo Tótem tiene reglas particulares.",
+                    merits: "informacion insuficiente.",
+                    renown: "Se obtiene mediante los acontecimientos y reconocimientos de la historia, no mediante una compra ordinaria de experiencia.",
+                    rites: "informacion insuficiente.",
+                    notes: "Los Dones de otra raza, auspicio o tribu tienen un coste superior y requieren aprendizaje. La adquisición de Dones también depende del rango apropiado."
+                }
+            },
+            {
+                id: "experienceMage", name: "Mago: La Ascensión 20.º Aniversario", source: ["mage"],
+                system: {
+                    attributes: "Puntuación actual × 4.",
+                    abilities: "Puntuación actual × 2.",
+                    newAbility: "3 puntos.",
+                    affinitySphere: "Puntuación actual × 7.",
+                    otherSphere: "Puntuación actual × 8.",
+                    newSphere: "10 puntos.",
+                    arete: "Puntuación actual × 8.",
+                    willpower: "Puntuación actual × 1.",
+                    backgrounds: "Puntuación actual × 3, sujeto a aprobación del Narrador y a las restricciones del Trasfondo.",
+                    newRote: "1 punto por nivel del efecto.",
+                    avatar: "Puntuación actual × 8. Requiere un Despertar o acontecimiento narrativo apropiado.",
+                    merits: "informacion insuficiente.",
+                    quintessence: "No se compra como puntuación permanente mediante experiencia ordinaria.",
+                    paradox: "No se compra mediante experiencia.",
+                    notes: "La Esfera de afinidad cuesta menos que las demás. Aumentar Arete es especialmente significativo y puede requerir una Búsqueda o acontecimiento narrativo."
+                }
+            },
+            {
+                id: "experienceWraith", name: "Wraith: El Olvido 20.º Aniversario", source: ["wraith"],
+                system: {
+                    attributes: "Puntuación actual × 4.",
+                    abilities: "Puntuación actual × 2.",
+                    newAbility: "3 puntos.",
+                    arcanoi: "Puntuación actual × 3.",
+                    newArcanos: "7 puntos.",
+                    willpower: "Puntuación actual × 1.",
+                    passions: "Puntuación actual × 3 para aumentar una Pasión existente. Una nueva Pasión cuesta 3 puntos.",
+                    fetters: "3 puntos × puntuación deseada. El coste debe pagarse de una sola vez.",
+                    backgrounds: "No se compran normalmente con experiencia. Con aprobación del Narrador, un nuevo Trasfondo cuesta 4 puntos y aumentarlo cuesta puntuación actual × 3.",
+                    corpus: "No puede aumentarse mediante experiencia.",
+                    pathos: "informacion insuficiente.",
+                    shadowExperience: {
+                        accumulation: "La Sombra recibe un punto de experiencia por cada tres puntos obtenidos por la Psique, redondeando hacia arriba.",
+                        thorns: "Coste original de la Espina.",
+                        angst: "Puntuación actual × 1.",
+                        newDarkPassion: "2 puntos.",
+                        darkPassions: "Puntuación actual × 2."
+                    },
+                    notes: "Los aumentos de Pasiones, Grilletes y Trasfondos requieren justificación narrativa y aprobación del Narrador. Los Arcanoi pueden aprenderse con instrucción de un Gremio o maestro; las condiciones de aprendizaje pueden modificar su coste."
+                }
+            }
+        ];
 
         // --- MÉRITOS ---
 
