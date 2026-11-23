@@ -6650,7 +6650,7 @@
         const tabGroups = document.querySelectorAll("[data-tab-group]");
 
         tabGroups.forEach(function(group) {
-            const tabButtons = group.querySelectorAll(".tab-button");
+            const tabButtons = group.querySelectorAll(":scope > .tab-button");
             const pageSection = group.closest(".page");
             const panels = pageSection.querySelectorAll(".tab-panel");
 
@@ -6714,98 +6714,191 @@
         });
 
         // --- SISTEMA ---
-        function renderSystemPanel(containerId, data) {
+        renderInfoCards(containerId, title, description, items) 
+        {
             const container = document.getElementById(containerId);
 
             container.innerHTML = `
                 <div class="info-panel">
-                    <div class="eyebrow">Reglas generales</div>
-                    <h2>${data.title}</h2>
-                    <p>${data.description}</p>
+                    <div class="eyebrow">Sistema de juego</div>
+                    <h2>${title}</h2>
+                    ${description ? `<p>${description}</p>` : ""}
                     <div class="rule-list">
-                        ${data.rules.map(rule => `
+                        ${items.map(item => `
                             <div class="rule-item">
-                                <strong>${rule[0]}</strong>
-                                <span>${rule[1]}</span>
+                                <strong>${item.title}</strong>
+                                <span>${item.description || ""}</span>
                             </div>
                         `).join("")}
                     </div>
-                    ${data.successes ? `
-                        <div class="section-heading">
-                            <h2>Tabla de éxitos</h2>
-                        </div>
-                        <div class="rule-list">
-                            ${data.successes.map(rule => `
-                                <div class="rule-item">
-                                    <strong>${rule[0]}</strong>
-                                    <span>${rule[1]}</span>
-                                </div>
-                            `).join("")}
-                        </div>
-                    ` : ""}
                 </div>
             `;
         }
 
+        // --- SISTEMA DE DADOS ---
+        renderInfoCards(
+            "systemDice",
+            dicePoolSystem.name,
+            dicePoolSystem.description,
+            [
+                { title: "Pileta de dados", description: dicePoolSystem.system.pool },
+                { title: "Dificultad", description: dicePoolSystem.system.difficulty },
+                { title: "Éxitos", description: dicePoolSystem.system.success },
+                { title: "Resultados de 1", description: dicePoolSystem.system.botch },
+                { title: "Especialización", description: dicePoolSystem.system.specialization },
+                ...successLevels.map(item => ({
+                    title: `${item.successes} ${item.successes === 1 ? "éxito" : "éxitos"}: ${item.name}`,
+                    description: ""
+                }))
+            ]
+        );
+
+        // --- ATRIBUTOS ---
+        const attributeRecords = [
+            strength, dexterity, stamina,
+            charisma, manipulation, appearance,
+            perception, intelligence, wits
+        ];
+
+        renderInfoCards(
+            "systemAttributes",
+            "Atributos",
+            "Los atributos representan las capacidades innatas del personaje.",
+            attributeRecords.map(item => ({
+                title: item.id,
+                description: item.description
+            }))
+        );
+
+        // --- HABILIDADES ---
+        const abilityRecords = [
+            alert, athletics, streetwise, empathy, dodge,
+            expression, intimidation, leadership, brawl, subterfuge,
+            agenciar, goodFortune, search, diplomacy, style,
+            grace, imitation, instruction, interrogation, intrigue,
+            intuition, throwing, masquerade, begging, haggling,
+            ventriloquism, hobby, melee, firearms, drive,
+            etiquette, performance, crafts, security, stealth,
+            survival, animalKen, acrobatics, camouflage, hunting,
+            fireDance, demolitions, disguise, riding, flirting,
+            herbalism, lipReading, meditation, piloting, archery,
+            sleightOfHand, professional, academicism, science, finance,
+            computer, investigation, law, linguistics, medicine,
+            occultism, politics, bureaucracy, blackHandKnowledge,
+            clanKnowledge, underworldKnowledge, cryptography,
+            camarillaCulture, sewerCulture, sabbatCulture,
+            localCulture, research, economics, enigmas, history,
+            computerHacking, psychology, citySecrets, expertKnowledge
+        ];
+
+        renderInfoCards(
+            "systemAbilities",
+            "Habilidades",
+            "Las habilidades representan los conocimientos, talentos y técnicas aprendidos por el personaje.",
+            abilityRecords.map(item => ({
+                title: `${item.category} · ${item.id}`,
+                description: item.description
+            }))
+        );
+
+        // --- COMBATE ---
+        const combatItems = [
+            ...combatSystem.concepts.map(item => ({
+                title: item.name,
+                description: `${item.description} ${(item.system || []).join(" ")}`
+            })),
+            ...combatSystem.sequence.map(item => ({
+                title: `${item.order}. ${item.name}`,
+                description: item.description
+            })),
+            ...combatSystem.actionTypes.map(item => ({
+                title: item.name,
+                description: item.description
+            })),
+            ...combatSystem.attackTypes.map(item => ({
+                title: item.name,
+                description: item.description
+            })),
+            ...combatSystem.defensiveActions.map(item => ({
+                title: item.name,
+                description: item.description
+            })),
+            ...Object.entries(combatSystem.timing).map(([key, value]) => ({
+                title: key,
+                description: value
+            }))
+        ];
+
+        renderInfoCards(
+            "systemCombat",
+            combatSystem.name,
+            combatSystem.description,
+            combatItems
+        );
+
+        // --- SALUD ---
+        renderInfoCards(
+            "systemHealth",
+            "Sistema de Salud",
+            "Niveles de daño y consecuencias sobre el personaje.",
+            health.map(item => ({
+                title: `${item.level} · ${item.name}`,
+                description: `${item.description} ${(item.system || []).join(" ")}`
+            }))
+        );
+
+        // --- EXPERIENCIA ---
         function renderExperienceLine(lineId) {
-            const data = experienceReferenceData[lineId];
+            const data = experience.find(item =>
+                item.source && item.source.includes(lineId)
+            );
+
             const container = document.getElementById("experienceLineContent");
 
-            if (!data) return;
+            if (!data) {
+                container.innerHTML = `
+                    <div class="placeholder">
+                        <h3>Información pendiente</h3>
+                        <p>No hay costes registrados para esta línea.</p>
+                    </div>
+                `;
+                return;
+            }
 
-            let content = `
+            const rules = Object.entries(data.system || {})
+                .filter(([key]) => key !== "notes")
+                .map(([key, value]) => ({
+                    title: key,
+                    description: value
+                }));
+
+            container.innerHTML = `
                 <div class="section-heading">
-                    <h2>${data.title}</h2>
+                    <h2>${data.name}</h2>
                     <span>COSTES DE EXPERIENCIA</span>
                 </div>
+                <div class="rule-list">
+                    ${rules.map(rule => `
+                        <div class="rule-item">
+                            <strong>${rule.title}</strong>
+                            <span>${rule.description}</span>
+                        </div>
+                    `).join("")}
+                </div>
+                ${data.system.notes ? `<p>${data.system.notes}</p>` : ""}
             `;
-
-            if (!data.rules) {
-                content += `
-                    <div class="placeholder">
-                        <div class="symbol">✦</div>
-                        <h3>Información pendiente</h3>
-                        <p>Los costes de experiencia de esta línea todavía no están incorporados.</p>
-                    </div>
-                `;
-            } else {
-                content += `
-                    <div class="rule-list">
-                        ${data.rules.map(rule => `
-                            <div class="rule-item">
-                                <strong>${rule[0]}</strong>
-                                <span>${rule[1]}</span>
-                            </div>
-                        `).join("")}
-                    </div>
-                `;
-            }
-
-            if (data.notes) {
-                content += `<p>${data.notes}</p>`;
-            }
-
-            container.innerHTML = content;
         }
 
-
-        // --- SISTEMA: INICIALIZACIÓN ---
-
-        renderSystemPanel("systemDice", systemReferenceData.dice);
-        renderSystemPanel("systemAttributes", systemReferenceData.attributes);
-        renderSystemPanel("systemAbilities", systemReferenceData.abilities);
-        renderSystemPanel("systemCombat", systemReferenceData.combat);
-        renderSystemPanel("systemHealth", systemReferenceData.health);
-
+        // --- SELECTOR DE LINEAS ---
         const experienceLineButtons = document.querySelectorAll(
             "#experienceLineSelector [data-experience-line]"
         );
 
-        experienceLineButtons.forEach(function(button) {
+        experienceLineButtons.forEach(button => {
             button.addEventListener("click", function() {
-                experienceLineButtons.forEach(function(item) {
-                    item.classList.remove("active");
-                });
+                experienceLineButtons.forEach(item =>
+                    item.classList.remove("active")
+                );
 
                 button.classList.add("active");
                 renderExperienceLine(button.dataset.experienceLine);
